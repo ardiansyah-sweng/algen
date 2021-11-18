@@ -1,0 +1,2 @@
+# algen
+Algoritma Genetika
