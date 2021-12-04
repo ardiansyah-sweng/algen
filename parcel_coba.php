@@ -344,10 +344,14 @@ class Selection
 
 class Algen
 {
-    function __construct($popSize)
+    public $maxIter;
+
+    function __construct($popSize, $maxIter)
     {
         $this->popSize = $popSize;
+        $this->maxIter = $maxIter;
     }
+
     function isFound($bestIndividus)
     {
         $residual = Parameters::BUDGET - $bestIndividus['fitnessValue'];
@@ -370,7 +374,7 @@ class Algen
         $bestIndividuIsFound = $this->isFound($bestIndividus);
 
         $iter = 0;
-        while ($iter < Parameters::MAX_ITER || $bestIndividuIsFound === FALSE) {
+        while ($iter < $this->maxIter || $bestIndividuIsFound === FALSE) {
 
             $crossoverOffsprings = (new Crossover($population, $this->popSize))->crossover();
             $mutation = new Mutation($population, $this->popSize);
@@ -408,25 +412,36 @@ class Algen
     }
 }
 
-function saveToFile($popSize, $fitnessValue, $numOfItems)
+function saveToFile($maxIter, $fitnessValue, $numOfItems)
 {
     $pathToFile = 'parcel.txt';
-    $data = array($popSize, $fitnessValue, $numOfItems);
+    $data = array($maxIter, $fitnessValue, $numOfItems);
     $fp = fopen($pathToFile, 'a');
     fputcsv($fp, $data);
     fclose($fp);
 }
 
-for ($popSize = 20; $popSize <= 250; $popSize+=40){
-    for ($i = 0; $i < 10; $i++){
-        echo 'PopSize: ' . $popSize;
-        $algenKnapsack = (new Algen($popSize))->algen();
-        echo ' Fitness: '.$algenKnapsack['fitnessValue'] . ' Items: ' . $algenKnapsack['numOfItems'];
-        echo "\n";
-        saveToFile($popSize, $algenKnapsack['fitnessValue'], $algenKnapsack['numOfItems']);
+// for ($popSize = 20; $popSize <= 60; $popSize+=10){
+//     for ($i = 0; $i < 30; $i++){
+//         echo 'PopSize: ' . $popSize;
+//         $algenKnapsack = (new Algen($popSize))->algen();
+//         echo ' Fitness: '.$algenKnapsack['fitnessValue'] . ' Items: ' . $algenKnapsack['numOfItems'];
+//         echo "\n";
+//         saveToFile($popSize, $algenKnapsack['fitnessValue'], $algenKnapsack['numOfItems']);
+//     }
+// }
+
+$popSize = 60;
+    for ($maxIter = 5; $maxIter < 250; $maxIter+=10){
+        echo 'MaxIter: '. $maxIter;
+        for($i=0; $i < 30; $i++){
+            $algenKnapsack = (new Algen($popSize, $maxIter))->algen();
+            echo ' Fitness: '.$algenKnapsack['fitnessValue'] . ' Items: ' . $algenKnapsack['numOfItems'];
+            echo "\n";
+            saveToFile($maxIter, $algenKnapsack['fitnessValue'], $algenKnapsack['numOfItems']);
+        }
     }
-}
 
 $end = microtime(true);
 
-echo 'Time: '. $end - $start;
+echo 'Time: '. ($end - $start);
