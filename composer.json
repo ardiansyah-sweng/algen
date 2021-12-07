@@ -6,6 +6,9 @@
         },
         "classmap": [
             "app"
+        ],
+        "files": [
+            "main.php"
         ]
     },
     "authors": [

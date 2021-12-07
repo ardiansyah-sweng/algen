@@ -8,12 +8,14 @@ class ChromosomeTest extends TestCase
     function testCreateChromosome_isReturned()
     {
         $chromosome = new Chromosome;
-        if ($chromosome->createChromosome()){
-            $this->assertNotEmpty($chromosome->createChromosome());
-            $this->assertContainsEquals(0, $chromosome->createChromosome());
-            $this->assertContainsEquals(1, $chromosome->createChromosome());
+        $chromosomes = $chromosome->createChromosome();
+
+        if ($chromosomes){
+            $this->assertNotEmpty($chromosomes);
+            $this->assertContainsEquals(0, $chromosomes);
+            $this->assertContainsEquals(1, $chromosomes);
         } else {
-            $this->assertEmpty($chromosome->createChromosome());
+            $this->assertEmpty($chromosomes);
         }
     }
 }

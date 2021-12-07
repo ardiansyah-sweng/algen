@@ -1,11 +1,19 @@
 <?php
 
-use phpDocumentor\Reflection\Types\Integer;
-
 require 'vendor/autoload.php';
 
 class Fitness
 {
+
+    public $populations;
+    public $maxBudget;
+
+    function __construct(array $populations, float $maxBudget)
+    {
+        $this->populations = $populations;
+        $this->maxBudget = $maxBudget;
+    }
+
     function assigningGenWithPrice(array $chromosomes): array
     {
         $binary1Genes = [];
@@ -37,22 +45,36 @@ class Fitness
 
     function calculateFitnessValue(): array
     {
-        $population = new Population;
-        $population->popSize = 10; //move to main
-
         $chromosomeWithFitnessValues = [];
-        if (empty($population->generatePopulation()[0])) {
+        if (empty($this->populations[0])) {
             return $chromosomeWithFitnessValues;
         }
-        foreach ($population->generatePopulation() as $chromosomes) {
+        foreach ($this->populations as $chromosomes) {
             $assignedGenes = $this->assigningGenWithPrice($chromosomes);
             $chromosomeWithFitnessValues[] =
                 [
                     'numOfSelectedGen' => count($assignedGenes),
-                    'amount' => array_sum(array_column($assignedGenes, 'price')),
+                    'fitnessValue' => array_sum(array_column($assignedGenes, 'price')),
                     'chromosome' => $chromosomes
                 ];
         }
         return $chromosomeWithFitnessValues;
+    }
+
+    function fitnessEvaluation(): array
+    {
+        $fitChromosomes = [];
+
+        $fitnessValues = $this->calculateFitnessValue();
+        if (empty($fitnessValues)) {
+            return $fitChromosomes;
+        }
+
+        foreach ($fitnessValues as $chromosomes) {
+            if ($chromosomes['fitnessValue'] <= $this->maxBudget) {
+                $fitChromosomes[] = $chromosomes;
+            }
+        }
+        return $fitChromosomes;
     }
 }

@@ -5,7 +5,7 @@
  */
 class Catalogue
 {
-    function getDBConnection():object
+    function getDBConnection()
     {
         $koneksiDB = new KoneksiDatabase;
         $koneksiDB->namaServer = 'localhost';
