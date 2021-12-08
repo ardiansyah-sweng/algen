@@ -18,8 +18,9 @@ class Main
 
     function runMain()
     {
-        $population = new Population;
-        $crossover = new Crossover;
+        $catalogue = new Catalogue;
+        $population = new Population($this->popSize, $catalogue->getAllProducts());
+        $crossover = new Crossover($population);
         $crossover->popSize = $this->popSize;
         $crossover->crossoverRate = $this->crossoverRate;
 

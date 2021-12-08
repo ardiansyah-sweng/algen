@@ -21,6 +21,7 @@
         "phpunit/phpunit": "9.5"
     },
     "require": {
-        "fakerphp/faker": "^1.17"
+        "fakerphp/faker": "^1.17",
+        "mbezhanov/faker-provider-collection": "^2.0"
     }
 }

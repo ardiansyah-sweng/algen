@@ -7,7 +7,10 @@ class ChromosomeTest extends TestCase
 {
     function testCreateChromosome_isReturned()
     {
-        $chromosome = new Chromosome;
+        $catalogue = new Catalogue;
+        $allProduct = $catalogue->getAllProducts();
+
+        $chromosome = new Chromosome($allProduct);
         $chromosomes = $chromosome->createChromosome();
 
         if ($chromosomes){

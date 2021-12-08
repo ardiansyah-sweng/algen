@@ -38,7 +38,7 @@ class MockCatalogueTest extends TestCase
         $this->assertEmpty($products);
     }
 
-    function testMockCatalogueAreReturned_notEmpty()
+    function testMockCatalogueAreReturned()
     {
         $mockProduct = $this->createMock(Catalogue::class);
         $mockProducts = [
@@ -52,14 +52,44 @@ class MockCatalogueTest extends TestCase
         
         $this->assertIsArray($products);
         $this->assertNotEmpty($products);
+
+        $kromosom = new Chromosome($products);
+        $kromosom->numOfGen = count($products);
+        $result = $kromosom->createChromosome();
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertContainsEquals(0, $result);
+        $this->assertContainsEquals(1, $result);
     }
 
-    function test_mockCatalog_usingFaker()
+    function test_createChromosome_usingFaker_products()
     {
         $mockProduct = $this->createMock(Catalogue::class);
-        $faker = Faker\Factory::create();
-        echo $faker->name();
+        $faker = Faker\Factory::create('id_ID');
+        $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
+
+        for ($i = 0; $i < 10; $i++){
+            $kode = $faker->numberBetween(1, 100);            
+            $mockProducts[]  = [
+                'kode'=> $kode,
+                'nama_produk' => $faker->productName(),
+                'harga' => $faker->numberBetween(8500, 150000)
+            ];
+        }
+        
+        $mockProduct->method('getAllProducts')
+                    ->willReturn($mockProducts);
+        $products = $mockProduct->getAllProducts();
+        
+        $this->assertIsArray($products);
+        $this->assertNotEmpty($products);
+
+        $kromosom = new Chromosome($products);
+        $result = $kromosom->createChromosome();
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+        $this->assertContainsEquals(0, $result);
+        $this->assertContainsEquals(1, $result);
     }
-
-
 }

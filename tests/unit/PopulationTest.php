@@ -7,11 +7,9 @@ class PopulationTest extends TestCase
 {
     function testGeneratePopulation()
     {
-        $population = new Population;
         $catalogue = new Catalogue;
+        $population = new Population(10, $catalogue->getAllProducts());
         $numOfGen = count($catalogue->getAllProducts());
-
-        $population->popSize = 10;
         
         if ($population->generatePopulation()){
             $this->assertNotEmpty($population->generatePopulation());
