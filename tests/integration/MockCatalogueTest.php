@@ -54,5 +54,12 @@ class MockCatalogueTest extends TestCase
         $this->assertNotEmpty($products);
     }
 
+    function test_mockCatalog_usingFaker()
+    {
+        $mockProduct = $this->createMock(Catalogue::class);
+        $faker = Faker\Factory::create();
+        echo $faker->name();
+    }
+
 
 }
