@@ -365,6 +365,27 @@ class Algen
         return array_count_values($chromosome)[1];
     }
 
+    function analytics($iter, $analitics)
+    {
+        $numOfLastResults = 10;
+        if ($iter >= ($numOfLastResults - 1)) {
+            $residual = count($analitics) - $numOfLastResults;
+            
+            if ($residual === 0 && count(array_unique($analitics)) === 1) {
+                return true;
+            }
+
+            if ($residual > 0) {
+                for ($i = 0; $i < $residual; $i++) {
+                    array_shift($analitics);
+                }
+                if (count(array_unique($analitics)) === 1) {
+                    return true;
+                }
+            }
+        }
+    }
+
     function algen()
     {
         $fitness = new Fitness;
@@ -399,6 +420,10 @@ class Algen
                 return $bestIndividus;
             }
             $bests[] = $bestIndividus;
+            $analitics[] = $bestIndividus['fitnessValue'];
+            if ($this->analytics($iter, $analitics)) {
+                break;
+            }
             $iter++;
         }
 
@@ -421,26 +446,26 @@ function saveToFile($maxIter, $fitnessValue, $numOfItems)
     fclose($fp);
 }
 
-// for ($popSize = 20; $popSize <= 60; $popSize+=10){
-//     for ($i = 0; $i < 30; $i++){
-//         echo 'PopSize: ' . $popSize;
-//         $algenKnapsack = (new Algen($popSize))->algen();
-//         echo ' Fitness: '.$algenKnapsack['fitnessValue'] . ' Items: ' . $algenKnapsack['numOfItems'];
-//         echo "\n";
-//         saveToFile($popSize, $algenKnapsack['fitnessValue'], $algenKnapsack['numOfItems']);
-//     }
-// }
-
-$popSize = 60;
-    for ($maxIter = 5; $maxIter < 250; $maxIter+=10){
-        echo 'MaxIter: '. $maxIter;
-        for($i=0; $i < 30; $i++){
-            $algenKnapsack = (new Algen($popSize, $maxIter))->algen();
-            echo ' Fitness: '.$algenKnapsack['fitnessValue'] . ' Items: ' . $algenKnapsack['numOfItems'];
-            echo "\n";
-            saveToFile($maxIter, $algenKnapsack['fitnessValue'], $algenKnapsack['numOfItems']);
-        }
+for ($popSize = 5; $popSize <= 100; $popSize+=5){
+    for ($i = 0; $i < 30; $i++){
+        echo 'PopSize: ' . $popSize;
+        $algenKnapsack = (new Algen($popSize, 250))->algen();
+        echo ' Fitness: '.$algenKnapsack['fitnessValue'] . ' Items: ' . $algenKnapsack['numOfItems'];
+        echo "\n";
+        saveToFile($popSize, $algenKnapsack['fitnessValue'], $algenKnapsack['numOfItems']);
     }
+}
+
+// $popSize = 60;
+//     for ($maxIter = 5; $maxIter < 250; $maxIter+=10){
+//         echo 'MaxIter: '. $maxIter;
+//         for($i=0; $i < 30; $i++){
+//             $algenKnapsack = (new Algen($popSize, $maxIter))->algen();
+//             echo ' Fitness: '.$algenKnapsack['fitnessValue'] . ' Items: ' . $algenKnapsack['numOfItems'];
+//             echo "\n";
+//             saveToFile($maxIter, $algenKnapsack['fitnessValue'], $algenKnapsack['numOfItems']);
+//         }
+//     }
 
 $end = microtime(true);
 
