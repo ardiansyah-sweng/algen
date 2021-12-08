@@ -23,6 +23,7 @@ class MockChromosomeTest extends TestCase
         $kromosom = new Chromosome($products);
         $kromosom->numOfGen = count($products);
         $result = $kromosom->createChromosome();
+
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertContainsEquals(0, $result);
@@ -53,7 +54,7 @@ class MockChromosomeTest extends TestCase
 
         $kromosom = new Chromosome($products);
         $result = $kromosom->createChromosome();
-
+        print_r($result);die;
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertContainsEquals(0, $result);
