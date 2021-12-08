@@ -1,0 +1,26 @@
+{
+    "name": "1/algen",
+    "autoload": {
+        "psr-4": {
+            "1\\Algen\\": "src/"
+        },
+        "classmap": [
+            "app"
+        ],
+        "files": [
+            "main.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "ardiansyah-sweng",
+            "email": "ardiansyah.2019@outlook.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "9.5"
+    },
+    "require": {
+        "fakerphp/faker": "^1.17"
+    }
+}
