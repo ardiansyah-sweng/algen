@@ -23,6 +23,7 @@ class Main
         $crossover = new Crossover($population);
         $crossover->popSize = $this->popSize;
         $crossover->crossoverRate = $this->crossoverRate;
+        
 
         $population->popSize = $this->popSize;
         $populations = $population->generatePopulation();

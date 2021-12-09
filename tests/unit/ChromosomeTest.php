@@ -9,7 +9,6 @@ class ChromosomeTest extends TestCase
     {
         $catalogue = new Catalogue;
         $allProduct = $catalogue->getAllProducts();
-
         $chromosome = new Chromosome($allProduct);
         $chromosomes = $chromosome->createChromosome();
 
