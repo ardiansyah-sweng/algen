@@ -28,7 +28,7 @@ class SelectionTest extends TestCase
         }
 
         $selectionFactory = new SelectionFactory;
-        $result = $selectionFactory->initializeSelectionFactory('elitism',$generatedPopulation, $crossoverOffsprings, 75000);
+        $result = $selectionFactory->initializeSelectionFactory('elitism',$generatedPopulation, $crossoverOffsprings, 70000);
 
         print_r($result);
     }

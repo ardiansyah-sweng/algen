@@ -21,13 +21,20 @@ class Elitism implements Selection
     {
         $tempPopulation = $this->createTemporaryPopulation($population);
         $fitness = new Fitness($population, $maxBudget);
+        $fitChromosomes = [];
 
         foreach ($tempPopulation as $chromosomes){
             $amount = $fitness->getAmount($chromosomes);
             if ($amount <= $maxBudget){
-                $fitChromosomes[] = $chromosomes;
+                $fitChromosomes[] = [
+                    'amount' => $amount,
+                    'chromosomes' => $chromosomes
+                ];
             }
         }
+        rsort($fitChromosomes);
+        $fitChromosomes = array_slice($fitChromosomes, 0, count($population));
+
         return $fitChromosomes;
     }
 }

@@ -21,4 +21,13 @@ class CatalogueTest extends TestCase
             $this->assertEmpty($allProducts->getAllProducts());
         }
     }
+
+    function test_createFakeCatalogue()
+    {
+        $allProducts = new Catalogue;
+        $result = $allProducts->createFakeCatalogue();
+        //print_r($result);
+
+        $this->assertTrue($result);
+    }
 }
