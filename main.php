@@ -25,11 +25,20 @@ class Main
         $crossover = new Crossover;
         $crossover->popSize = $this->popSize;
         $crossover->crossoverRate = $this->crossoverRate;
-        return $crossover->runCrossover($populations);
 
         for ($i = 0; $i < $this->maxGen; $i++){
             $crossoverOffsprings = $crossover->runCrossover($populations);
-            return $crossoverOffsprings;
+            $mutation = new Mutation;
+            $mutation->popSize = $this->popSize;
+            $mutatedChromosomes = $mutation->runMutation(new MutationCalculator, $populations);
+            
+            // Jika ada hasil mutasi, maka gabungkan chromosomes offspring dengan hasil chromosome mutasi
+            if (count($mutatedChromosomes) > 0){
+                foreach ($mutatedChromosomes as $mutatedChromosome){
+                    $crossoverOffsprings[] = $mutatedChromosome;
+                }
+            }
+
         }
     }
 }
