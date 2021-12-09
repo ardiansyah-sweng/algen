@@ -48,7 +48,7 @@ class MutationTest extends TestCase
         $chromosomes = $chromosome->createChromosome(new Catalogue);
 
         $calculator = new MutationCalculator;
-        //echo $calculator->calculateNumOfMutation($chromosomes, 10);die;
+        //echo $calculator->calculateNumOfMutation($chromosomes, 30);die;
 
         $this->assertIsInt($calculator->calculateNumOfMutation($chromosomes, 10));
     }
@@ -113,7 +113,7 @@ class MutationTest extends TestCase
     function test_mutation_catalogueDatabase_isAvailable_numOfMutation_greaterThanZero()
     {
         $mutation = new Mutation;
-        $mutation->popSize = 10;
+        $mutation->popSize = 30;
         $population = new InitialPopulation;   
         $population->popSize = $mutation->popSize;
         $generatedPopulation = $population->generatePopulation(new Chromosome);

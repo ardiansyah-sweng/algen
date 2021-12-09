@@ -10,10 +10,13 @@ class PopulationTest extends TestCase
         $population = new InitialPopulation;   
         $population->popSize = 10;
         $generatedPopulation = $population->generatePopulation(new Chromosome);
-        $numOfGen = count($generatedPopulation);
+
+        //echo $numOfGen;die;
+                
         $this->assertGreaterThan(5, count($generatedPopulation));
         $this->assertNotEmpty($generatedPopulation);
-        $this->assertEquals($numOfGen, count($generatedPopulation[0]));
+        $this->assertEquals(10, count($generatedPopulation));
+        $this->assertEquals(50, count($generatedPopulation[0]));
         $this->assertEquals($population->popSize, count($generatedPopulation));
     }
 

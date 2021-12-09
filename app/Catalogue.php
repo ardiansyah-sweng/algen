@@ -31,7 +31,7 @@ class Catalogue
         if (count($this->getAllProducts()) > 0){
             $this->emptyCatalogueTable();
         }
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $kode = $faker->unique()->numberBetween(1, 100);
             $item = $faker->productName();
             $price =  $faker->numberBetween(8500, 150000);

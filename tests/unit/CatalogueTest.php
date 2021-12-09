@@ -15,6 +15,7 @@ class CatalogueTest extends TestCase
     function testGetAllProducts()
     {
         $allProducts = new Catalogue;
+        //print_r($allProducts->getAllProducts());die;
         if ($allProducts->getAllProducts()){
             $this->assertNotEmpty($allProducts->getAllProducts());
         } else {

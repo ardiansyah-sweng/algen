@@ -8,7 +8,7 @@ class SelectionTest extends TestCase
     function test_runSelection_elitism()
     {
         $population = new InitialPopulation;   
-        $population->popSize = 10;
+        $population->popSize = 30;
         $generatedPopulation = $population->generatePopulation(new Chromosome);
 
         $crossover = new Crossover;
@@ -28,7 +28,7 @@ class SelectionTest extends TestCase
         }
 
         $selectionFactory = new SelectionFactory;
-        $result = $selectionFactory->initializeSelectionFactory('elitism',$generatedPopulation, $crossoverOffsprings, 70000);
+        $result = $selectionFactory->initializeSelectionFactory('elitism',$generatedPopulation, $crossoverOffsprings, 500000);
 
         print_r($result);
     }

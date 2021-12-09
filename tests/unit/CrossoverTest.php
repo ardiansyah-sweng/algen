@@ -77,7 +77,7 @@ class CrossoverTest extends TestCase
         $crossover->popSize = $population->popSize;
         $crossover->crossoverRate = 0.8;
 
-        print_r($crossover->runCrossover($initialPopulation));die;
+        //print_r($crossover->runCrossover($initialPopulation));die;
 
         $this->assertIsArray($crossover->runCrossover($initialPopulation));
     }

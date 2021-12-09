@@ -9,7 +9,7 @@ class ChromosomeTest extends TestCase
     {
         $chromosome = new Chromosome;
         $chromosomes = $chromosome->createChromosome(new Catalogue);
-
+        //print_r($chromosomes);die;
         if ($chromosomes){
             $this->assertNotEmpty($chromosomes);
             $this->assertContainsEquals(0, $chromosomes);
