@@ -4,6 +4,7 @@ class Crossover
 {
     public $popSize;
     public $crossoverRate;
+    public $chromosome;
 
     function randomizingParents():array
     {
@@ -41,10 +42,11 @@ class Crossover
         return $ret;
     }
 
-    function runCrossover()
+    function runCrossover(Chromosome $chromosome):int
     {
-        $chromosome = new Chromosome;
-        $chromosomes = $chromosome->createChromosome();
+        $this->chromosome = $chromosome;
+        $chromosomes =
+        $this->chromosome->createChromosome();
         $cutPointIndex = rand(0, count($chromosomes)-1 );
         return $cutPointIndex;
     }
