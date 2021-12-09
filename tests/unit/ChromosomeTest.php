@@ -7,10 +7,8 @@ class ChromosomeTest extends TestCase
 {
     function testCreateChromosome_isReturned()
     {
-        $catalogue = new Catalogue;
-        $allProduct = $catalogue->getAllProducts();
-        $chromosome = new Chromosome($allProduct);
-        $chromosomes = $chromosome->createChromosome();
+        $chromosome = new Chromosome;
+        $chromosomes = $chromosome->createChromosome(new Catalogue);
 
         if ($chromosomes){
             $this->assertNotEmpty($chromosomes);

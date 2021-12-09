@@ -8,38 +8,31 @@ class Main
     public $maxBudget;
     public $crossoverRate;
 
-    function __construct(int $popSize, int $maxGen, float $maxBudget, float $crossoverRate)
-    {
-        $this->popSize = $popSize;
-        $this->maxGen = $maxGen;
-        $this->maxBudget = $maxBudget;
-        $this->crossoverRate = $crossoverRate;
-    }
+    // function __construct(int $popSize, int $maxGen, float $maxBudget, float $crossoverRate)
+    // {
+    //     $this->popSize = $popSize;
+    //     $this->maxGen = $maxGen;
+    //     $this->maxBudget = $maxBudget;
+    //     $this->crossoverRate = $crossoverRate;
+    // }
 
     function runMain()
     {
-        $catalogue = new Catalogue;
-        $catalogues = $catalogue->getAllProducts();
-        $population = new Population($this->popSize, $catalogues);
+        $population = new InitialPopulation;   
+        $population->popSize = $this->popSize;
+        $populations = $population->generatePopulation(new Chromosome);
 
         $crossover = new Crossover;
         $crossover->popSize = $this->popSize;
         $crossover->crossoverRate = $this->crossoverRate;
-        $crossover->runCrossover(new Chromosome($catalogues));
-        
+        return $crossover->runCrossover($populations);
 
-        $population->popSize = $this->popSize;
-        $populations = $population->generatePopulation();
-
-        for ($generation = 0; $generation < $this->maxGen; $generation++){
-            
+        for ($i = 0; $i < $this->maxGen; $i++){
+            $crossoverOffsprings = $crossover->runCrossover($populations);
+            return $crossoverOffsprings;
         }
-
-
-        // $fitness = new Fitness($populations, $this->maxBudget);
-        // return $fitness->fitnessEvaluation();
     }
 }
 
-$main = new Main(10, 100, 155000, 0.8);
-$main->runMain();
+//$main = new Main(10, 100, 155000, 0.8);
+//$main->runMain();

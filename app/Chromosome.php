@@ -2,18 +2,11 @@
 
 class Chromosome
 {
-    public $catalogue;
-
-    function __construct(array $catalogue)
-    {
-        $this->catalogue = $catalogue;
-    }
-
-    function createChromosome():array
+    function createChromosome(Catalogue $catalogue):array
     {
         $chromosomes = [];  
-        $numOfGen = count($this->catalogue);
-
+        $numOfGen = count($catalogue->getAllProducts());
+        
         if ($numOfGen > 0) {
             $counter = 0;
             while ($counter < 1) {
