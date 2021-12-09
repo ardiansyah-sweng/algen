@@ -33,4 +33,12 @@ class CrossoverTest extends TestCase
         $parents = $crossover->generateCrossover();
         $this->assertNotEmpty($parents);
     }
+
+    function test_runCrossover()
+    {
+        $catalogues = (new Catalogue())->getAllProducts();
+        $crossover = new Crossover;
+        $result = $crossover->runCrossover(new Chromosome($catalogues));
+        print_r($result);
+    }
 }

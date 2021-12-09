@@ -19,10 +19,13 @@ class Main
     function runMain()
     {
         $catalogue = new Catalogue;
-        $population = new Population($this->popSize, $catalogue->getAllProducts());
-        $crossover = new Crossover($population);
+        $catalogues = $catalogue->getAllProducts();
+        $population = new Population($this->popSize, $catalogues);
+
+        $crossover = new Crossover;
         $crossover->popSize = $this->popSize;
         $crossover->crossoverRate = $this->crossoverRate;
+        $crossover->runCrossover(new Chromosome($catalogues));
         
 
         $population->popSize = $this->popSize;
