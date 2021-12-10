@@ -19,6 +19,26 @@ class Elitism implements Selection
         return $population;
     }
 
+    function check($checkPopulations, $popSize, $newPopulation)
+    {
+        if (count($checkPopulations) === $popSize){
+            // echo count($newPopulation);
+            // echo "\n";
+            // echo $popSize.' '. (count($newPopulation)-1);
+            // print_r($checkPopulations);die
+
+            for ($i = $popSize; $i < count($newPopulation); $i++) {
+                array_shift($checkPopulations);
+                $checkPopulations[] = $newPopulation[$i];
+                //echo $i . ' ' . $newPopulation[$i]['amount'] . ' ' . count($checkPopulations);
+                print_r($checkPopulations);die;
+                echo "\n";
+            }
+        }
+        
+
+    }
+
     function generateNewPopulation($population, $maxBudget)
     {
         $tempPopulation = $this->createTemporaryPopulation($population);
@@ -36,9 +56,10 @@ class Elitism implements Selection
         //urutkan secara desc dulu
         rsort($newPopulation);
         //baca satu per satu
-        foreach ($newPopulation as $key => $population){
-            // echo $key.' '. $population['amount'];
-            // echo "\n";
+        foreach ($newPopulation as $key => $chromosomes) {
+            //echo $chromosomes['amount'];
+            $checkPopulations[] = $chromosomes;
+            $this->check($checkPopulations, $this->popSize, $newPopulation);
         }
 
         return $newPopulation;

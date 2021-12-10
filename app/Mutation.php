@@ -2,11 +2,11 @@
 
 class Mutation
 {
-    public $catalogue;
+    public $numOfGen;
 
     function calculateMutationRate():float
     {
-        return 1 / (new Miscellaneous())->getNumOfGen($this->catalogue);
+        return 1 / $this->numOfGen;
     }
 
     function calculateNumOfMutation($popSize):int
@@ -30,7 +30,7 @@ class Mutation
         }
     }
 
-    function runMutation(array $population, $popSize, $catalogue):array
+    function runMutation(array $population, $popSize):array
     {
         $numOfMutation = $this->calculateNumOfMutation($popSize);
 
@@ -38,7 +38,7 @@ class Mutation
         if ($this->isContains($numOfMutation)){
             for ($i = 0; $i < $numOfMutation; $i++){
                 $indexOfChromosomes = (new Randomizer())->getRandomIndexOfIndividu($popSize);
-                $indexOfGen = Randomizer::getRandomIndexOfGen( (new Miscellaneous())->getNumOfGen($catalogue));
+                $indexOfGen = Randomizer::getRandomIndexOfGen($this->numOfGen);
                 $selectedChromosomes = $population[$indexOfChromosomes];
                 $valueOfGen = $selectedChromosomes[$indexOfGen];
                 $mutatedGen = $this->changeGen($valueOfGen);

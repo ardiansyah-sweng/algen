@@ -14,12 +14,12 @@ class Main
     function runMain()
     {
         $catalogue = new Catalogue;
-        $chromosome = new Chromosome($catalogue->getAllProducts());
-        $population = new InitialPopulation; 
-        
-        $chromosomes = $chromosome->createChromosome($catalogue->getAllProducts());
-        $populations = $population->generatePopulation($this->popSize, $chromosomes);
+        $population = new InitialPopulation;
+        $numOfGen = count($catalogue->getAllProducts());
 
+        $cutPointIndex = rand(0, $numOfGen- 1);
+        $populations = $population->generatePopulation($this->popSize, $catalogue->getAllProducts(), $numOfGen);
+        
         $crossoverOffsprings = [];
         $filtereds = [];
 
@@ -27,10 +27,11 @@ class Main
         $analytics = new Analytics;
 
         for ($i = 0; $i < $this->maxGen; $i++){
-            $crossover = new Crossover($this->popSize, $this->crossoverRate, $populations, $catalogue->getAllProducts());
+            $crossover = new Crossover($this->popSize, $this->crossoverRate, $populations, $catalogue->getAllProducts(), $cutPointIndex, $numOfGen);
             $crossoverOffsprings = $crossover->runCrossover($populations);
 
-            $mutation = new Mutation($populations, $this->popSize);
+            $mutation = new Mutation;
+            $mutation->numOfGen = $numOfGen;
             $mutation->catalogue = $catalogue->getAllProducts();
             $mutatedChromosomes = $mutation->runMutation($populations, $this->popSize, $catalogue->getAllProducts());
 
@@ -46,9 +47,7 @@ class Main
             $populations = null;
            
             $populations = $selection->initializeSelectionFactory($this->selectionType, $lastPopulation, $crossoverOffsprings, $this->maxBudget, $catalogue->getAllProducts(), $this->popSize);
-            
-            return ($populations);
-
+            die;
             $crossoverOffsprings = [];
 
             $bestChromosomes = $populations[0]['chromosomes'];

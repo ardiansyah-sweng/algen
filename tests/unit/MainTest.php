@@ -12,7 +12,7 @@ class MainTest extends TestCase
         $main->crossoverRate = 0.8;
         $main->maxGen = 10;
         $main->selectionType = 'elitism';
-        $main->maxBudget = 500000;
+        $main->maxBudget = 2000000;
         $main->stoppingValue = 100;
         $main->numOfLastResult = 10;
         
