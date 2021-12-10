@@ -2,7 +2,7 @@
 
 interface Selection
 {
-    function selectingSelection($population, $maxBudget);
+    function generateNewPopulation($population, $maxBudget);
 }
 
 class Elitism implements Selection
@@ -17,25 +17,25 @@ class Elitism implements Selection
         return $population;
     }
 
-    function selectingSelection($population, $maxBudget)
+    function generateNewPopulation($population, $maxBudget):array
     {
         $tempPopulation = $this->createTemporaryPopulation($population);
         $fitness = new Fitness($population, $maxBudget);
-        $fitChromosomes = [];
+        $newPopulation = [];
 
         foreach ($tempPopulation as $chromosomes){
             $amount = $fitness->getAmount($chromosomes);
             if ($amount <= $maxBudget){
-                $fitChromosomes[] = [
+                $newPopulation[] = [
                     'amount' => $amount,
                     'chromosomes' => $chromosomes
                 ];
             }
         }
-        rsort($fitChromosomes);
-        $fitChromosomes = array_slice($fitChromosomes, 0, count($population));
+        rsort($newPopulation);
+        $newPopulation = array_slice($newPopulation, 0, count($population));
 
-        return $fitChromosomes;
+        return $newPopulation;
     }
 }
 
@@ -46,7 +46,7 @@ class SelectionFactory
         if ($selectionType === 'elitism'){
             $elitism = new Elitism;
             $elitism->crossoverOffsprings = $crossoverOffsprings;
-            return $elitism->selectingSelection($population, $maxBudget);
+            return $elitism->generateNewPopulation($population, $maxBudget);
         }
     }
 }

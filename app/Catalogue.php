@@ -66,4 +66,20 @@ class Catalogue
         $sql = "TRUNCATE table produk";
         $this->getDBConnection()->query($sql);
     }
+
+    function getListOfItemName(array $chromosomes): array
+    {
+        $catalogue = new Catalogue;
+        $products = $catalogue->getAllProducts();
+
+        $itemsName = [];
+        if (count(array_unique($chromosomes)) > 1) {
+            foreach ($chromosomes as $key => $gen) {
+                if ($gen === 1) {
+                    $itemsName[] = $products[$key]['item'];
+                }
+            }
+        }
+        return $itemsName;
+    }
 }

@@ -46,7 +46,7 @@ class Crossover
         $chromosome = new Chromosome;
         $chromosomes = $chromosome->createChromosome(new Catalogue);
 
-        if ($offSpringCode === 1){
+         if ($offSpringCode === 1){
             for ($i = 0; $i < count($chromosomes); $i++){
                 if ($i <= $cutPointIndex){
                     $ret[] = $parent1Chromosome[$i];
@@ -82,6 +82,7 @@ class Crossover
     {
         $offsprings = [];
         foreach ($this->generateCrossover() as $listOfCrossover){
+
             $parent1Chromosome = $population[$listOfCrossover[0]];
             $parent2Chromosome = $population[$listOfCrossover[1]];
             $offspring1 = $this->offspring($parent1Chromosome, $parent2Chromosome, $this->getCutPointIndex(), 1);

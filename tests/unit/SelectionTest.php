@@ -30,6 +30,9 @@ class SelectionTest extends TestCase
         $selectionFactory = new SelectionFactory;
         $result = $selectionFactory->initializeSelectionFactory('elitism',$generatedPopulation, $crossoverOffsprings, 500000);
 
-        print_r($result);
+        print_r($result); die;
+
+        $this->assertIsArray($result);
+        $this->assertEquals($population->popSize, count($result));
     }
 }

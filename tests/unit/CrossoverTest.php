@@ -28,9 +28,10 @@ class CrossoverTest extends TestCase
     function test_generateCrossover()
     {
         $crossover = new Crossover;
-        $crossover->popSize = 10;
+        $crossover->popSize = 30;
         $crossover->crossoverRate = 0.8;
         $parents = $crossover->generateCrossover();
+        print_r($parents);die;
         $this->assertNotEmpty($parents);
     }
 
@@ -44,7 +45,7 @@ class CrossoverTest extends TestCase
     function test_offspring()
     {
         $crossover = new Crossover;
-        $crossover->popSize = 10;
+        $crossover->popSize = 30;
         $crossover->crossoverRate = 0.8;
 
         $chromosome = new Chromosome;
@@ -59,7 +60,12 @@ class CrossoverTest extends TestCase
         $parent2Chromosome = $chromosome->createChromosome(new Catalogue);
         $offspring2 = $crossover->offspring($parent1Chromosome, $parent2Chromosome, $cutPointIndex, 2);
 
-        //print_r($offspring2); die;
+        echo "\n";
+        print_r($offspring1); 
+        echo "\n";
+        print_r($offspring2); 
+        
+        die;
 
         $this->assertIsArray($offspring1);
         $this->assertContainsEquals(0, $offspring1);
@@ -70,14 +76,14 @@ class CrossoverTest extends TestCase
     function test_runCrossover()
     {
         $population = new InitialPopulation;   
-        $population->popSize = 10;
+        $population->popSize = 30;
         $initialPopulation = $population->generatePopulation(new Chromosome);
         
         $crossover = new Crossover;
         $crossover->popSize = $population->popSize;
         $crossover->crossoverRate = 0.8;
 
-        //print_r($crossover->runCrossover($initialPopulation));die;
+        print_r($crossover->runCrossover($initialPopulation));die;
 
         $this->assertIsArray($crossover->runCrossover($initialPopulation));
     }
