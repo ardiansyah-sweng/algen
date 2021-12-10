@@ -8,17 +8,17 @@ class MainTest extends TestCase
     function test_runMain_allHappy()
     {
         $main = new Main;
-        $main->popSize = 30;
+        $main->popSize = 85;
         $main->crossoverRate = 0.8;
-        $main->maxGen = 10;
+        $main->maxGen = 250;
         $main->selectionType = 'elitism';
-        $main->maxBudget = 2000000;
+        $main->maxBudget = 1450000;
         $main->stoppingValue = 100;
         $main->numOfLastResult = 10;
         
         $result = $main->runMain();
 
-        //print_r($result);die;
+        print_r($result);die;
         
     }
 }

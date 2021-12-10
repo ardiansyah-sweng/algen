@@ -74,7 +74,7 @@ class Catalogue
         if (count(array_unique($chromosomes)) > 1) {
             foreach ($chromosomes as $key => $gen) {
                 if ($gen === 1) {
-                    $itemsName[] = $products[$key]['item'];
+                    $itemsName[] = [$products[$key]['item'], $products[$key]['item_price']];
                 }
             }
         }

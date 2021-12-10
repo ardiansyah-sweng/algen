@@ -47,7 +47,7 @@ class Main
             $populations = null;
            
             $populations = $selection->initializeSelectionFactory($this->selectionType, $lastPopulation, $crossoverOffsprings, $this->maxBudget, $catalogue->getAllProducts(), $this->popSize);
-            die;
+
             $crossoverOffsprings = [];
 
             $bestChromosomes = $populations[0]['chromosomes'];
@@ -60,7 +60,7 @@ class Main
             ];
 
             //jika best chromosome langsung ditemukan
-            if ( ($this->maxBudget - $populations[0]['amount']) <= $this->stoppingValue ) {
+            if ( abs($this->maxBudget - $populations[0]['amount']) <= $this->stoppingValue ) {
                 return $returnedChromosomes;
             }
 
@@ -80,9 +80,8 @@ class Main
             $filtereds = [];
         }
         rsort($bests);
-        return $bests[0];
+        if ($bests[0]['amount'] <= $this->maxBudget){
+            return $bests[0];
+        }
     }
 }
-
-//$main = new Main(10, 100, 155000, 0.8);
-//$main->runMain();
