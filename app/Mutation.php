@@ -2,40 +2,16 @@
 
 class Mutation
 {
-    public $popSize;
+    public $catalogue;
 
-    function runMutation(MutationCalculator $mutationCalculator, array $population):array
+    function calculateMutationRate():float
     {
-        $chromosome = new Chromosome;
-        $chromosomes = $chromosome->createChromosome(new Catalogue);
-        $numOfMutation = $mutationCalculator->calculateNumOfMutation($chromosomes, $this->popSize);
-
-        $ret = [];
-        if ($mutationCalculator->isContains($numOfMutation)){
-            for ($i = 0; $i < $numOfMutation; $i++){
-                $indexOfChromosomes = (new Randomizer())->getRandomIndexOfIndividu($this->popSize);
-                $indexOfGen = Randomizer::getRandomIndexOfGen(count($chromosomes));
-                $selectedChromosomes = $population[$indexOfChromosomes];
-                $valueOfGen = $selectedChromosomes[$indexOfGen];
-                $mutatedGen = $mutationCalculator->changeGen($valueOfGen);
-                $selectedChromosomes[$indexOfGen] = $mutatedGen;
-                $ret[] = $selectedChromosomes;
-             }
-         }
-         return $ret;
-    }
-}
-
-class MutationCalculator
-{
-    function calculateMutationRate($chromosomes):float
-    {
-        return 1 / count($chromosomes);
+        return 1 / (new Miscellaneous())->getNumOfGen($this->catalogue);
     }
 
-    function calculateNumOfMutation($chromosomes, $popSize):int
+    function calculateNumOfMutation($popSize):int
     {
-        return round($this->calculateMutationRate($chromosomes) * $popSize);
+        return round($this->calculateMutationRate() * $popSize);
     }
 
     function isContains($numOfMutation)
@@ -52,5 +28,24 @@ class MutationCalculator
         } else {
             return 0;
         }
+    }
+
+    function runMutation(array $population, $popSize, $catalogue):array
+    {
+        $numOfMutation = $this->calculateNumOfMutation($popSize);
+
+        $ret = [];
+        if ($this->isContains($numOfMutation)){
+            for ($i = 0; $i < $numOfMutation; $i++){
+                $indexOfChromosomes = (new Randomizer())->getRandomIndexOfIndividu($popSize);
+                $indexOfGen = Randomizer::getRandomIndexOfGen( (new Miscellaneous())->getNumOfGen($catalogue));
+                $selectedChromosomes = $population[$indexOfChromosomes];
+                $valueOfGen = $selectedChromosomes[$indexOfGen];
+                $mutatedGen = $this->changeGen($valueOfGen);
+                $selectedChromosomes[$indexOfGen] = $mutatedGen;
+                $ret[] = $selectedChromosomes;
+             }
+         }
+         return $ret;
     }
 }

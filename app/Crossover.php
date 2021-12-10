@@ -4,6 +4,16 @@ class Crossover
 {
     public $popSize;
     public $crossoverRate;
+    public $populations;
+    public $catalogue;
+
+    function __construct(int $popSize, float $crossoverRate, array $populations, array $catalogue)
+    {
+        $this->popSize = $popSize;
+        $this->crossoverRate = $crossoverRate;
+        $this->populations = $populations;
+        $this->catalogue = $catalogue;
+    }
 
     function randomizingParents():array
     {
@@ -43,11 +53,8 @@ class Crossover
 
     function offspring(array $parent1Chromosome, array $parent2Chromosome, int $cutPointIndex, int $offSpringCode):array
     {
-        $chromosome = new Chromosome;
-        $chromosomes = $chromosome->createChromosome(new Catalogue);
-
          if ($offSpringCode === 1){
-            for ($i = 0; $i < count($chromosomes); $i++){
+            for ($i = 0; $i < (new Miscellaneous())->getNumOfGen($this->catalogue); $i++){
                 if ($i <= $cutPointIndex){
                     $ret[] = $parent1Chromosome[$i];
                 }
@@ -58,7 +65,7 @@ class Crossover
         }
 
         if ($offSpringCode === 2){
-            for ($i = 0; $i < count($chromosomes); $i++){
+            for ($i = 0; $i < (new Miscellaneous())->getNumOfGen($this->catalogue); $i++){
                 if ($i <= $cutPointIndex){
                     $ret[] = $parent2Chromosome[$i];
                 }
@@ -70,23 +77,21 @@ class Crossover
 
         return $ret;
     }
-
-    function getCutPointIndex():int
-    {
-        $chromosome = new Chromosome;
-        $chromosomes = $chromosome->createChromosome(new Catalogue);
-        return rand(0, count($chromosomes)-1 );
-    }
-    
+   
     function runCrossover($population):array
     {
         $offsprings = [];
+        $cutPointIndex = (new Miscellaneous())->getCutPointIndex($this->catalogue);
         foreach ($this->generateCrossover() as $listOfCrossover){
 
             $parent1Chromosome = $population[$listOfCrossover[0]];
             $parent2Chromosome = $population[$listOfCrossover[1]];
-            $offspring1 = $this->offspring($parent1Chromosome, $parent2Chromosome, $this->getCutPointIndex(), 1);
-            $offspring2 = $this->offspring($parent1Chromosome, $parent2Chromosome, $this->getCutPointIndex(), 2);
+            print_r($parent1Chromosome);
+            print_r($parent2Chromosome);
+            echo "\n";die;
+
+            $offspring1 = $this->offspring($parent1Chromosome, $parent2Chromosome, $cutPointIndex, 1);
+            $offspring2 = $this->offspring($parent1Chromosome, $parent2Chromosome, $cutPointIndex, 2);
             $offsprings[] = $offspring1;
             $offsprings[] = $offspring2;
         }

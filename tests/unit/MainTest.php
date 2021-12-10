@@ -8,9 +8,9 @@ class MainTest extends TestCase
     function test_runMain_allHappy()
     {
         $main = new Main;
-        $main->popSize = 35;
+        $main->popSize = 30;
         $main->crossoverRate = 0.8;
-        $main->maxGen = 3;
+        $main->maxGen = 10;
         $main->selectionType = 'elitism';
         $main->maxBudget = 500000;
         $main->stoppingValue = 100;
@@ -18,7 +18,7 @@ class MainTest extends TestCase
         
         $result = $main->runMain();
 
-        print_r($result);die;
+        //print_r($result);die;
         
     }
 }

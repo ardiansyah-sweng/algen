@@ -2,14 +2,12 @@
 
 class InitialPopulation
 {
-    public $popSize;
-
-    function generatePopulation(Chromosome $chromosome): array
+    function generatePopulation($popSize, $chromosomes): array
     {
         $population = [];
-        if ($this->popSize > 0) {
-            for ($i = 0; $i < $this->popSize; $i++) {
-                $population[] = $chromosome->createChromosome(new Catalogue);;
+        if ($popSize > 0) {
+            for ($i = 0; $i < $popSize; $i++) {
+                $population[] = $chromosomes;
             }
         }
         return $population;

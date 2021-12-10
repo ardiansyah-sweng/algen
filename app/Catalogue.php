@@ -31,7 +31,7 @@ class Catalogue
         if (count($this->getAllProducts()) > 0){
             $this->emptyCatalogueTable();
         }
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 50; $i++) {
             $kode = $faker->unique()->numberBetween(1, 100);
             $item = $faker->productName();
             $price =  $faker->numberBetween(8500, 150000);
@@ -58,6 +58,7 @@ class Catalogue
                 $ret[] = $row;
             }
         }
+        // $this->getDBConnection()->close();
         return $ret;
     }
 
@@ -69,9 +70,7 @@ class Catalogue
 
     function getListOfItemName(array $chromosomes): array
     {
-        $catalogue = new Catalogue;
-        $products = $catalogue->getAllProducts();
-
+        $products = $this->getAllProducts();
         $itemsName = [];
         if (count(array_unique($chromosomes)) > 1) {
             foreach ($chromosomes as $key => $gen) {

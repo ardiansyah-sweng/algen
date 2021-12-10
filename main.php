@@ -11,37 +11,28 @@ class Main
     public $stoppingValue;
     public $numOfLastResult;
 
-    // function __construct(int $popSize, int $maxGen, float $maxBudget, float $crossoverRate)
-    // {
-    //     $this->popSize = $popSize;
-    //     $this->maxGen = $maxGen;
-    //     $this->maxBudget = $maxBudget;
-    //     $this->crossoverRate = $crossoverRate;
-    // }
-
     function runMain()
     {
-        $population = new InitialPopulation;   
-        $population->popSize = $this->popSize;
+        $catalogue = new Catalogue;
+        $chromosome = new Chromosome($catalogue->getAllProducts());
+        $population = new InitialPopulation; 
         
-        $crossover = new Crossover;
-        $crossover->popSize = $this->popSize;
-        $crossover->crossoverRate = $this->crossoverRate;
-
-        $populations = $population->generatePopulation(new Chromosome);
+        $chromosomes = $chromosome->createChromosome($catalogue->getAllProducts());
+        $populations = $population->generatePopulation($this->popSize, $chromosomes);
 
         $crossoverOffsprings = [];
         $filtereds = [];
-        $mutation = new Mutation;
+
         $selection = new SelectionFactory;
-        $catalogue = new Catalogue;
         $analytics = new Analytics;
 
         for ($i = 0; $i < $this->maxGen; $i++){
+            $crossover = new Crossover($this->popSize, $this->crossoverRate, $populations, $catalogue->getAllProducts());
             $crossoverOffsprings = $crossover->runCrossover($populations);
 
-            $mutation->popSize = $this->popSize;
-            $mutatedChromosomes = $mutation->runMutation(new MutationCalculator, $populations);
+            $mutation = new Mutation($populations, $this->popSize);
+            $mutation->catalogue = $catalogue->getAllProducts();
+            $mutatedChromosomes = $mutation->runMutation($populations, $this->popSize, $catalogue->getAllProducts());
 
             // Jika ada hasil mutasi, maka gabungkan chromosomes offspring dengan hasil chromosome mutasi
             if (count($mutatedChromosomes) > 0){
@@ -49,13 +40,15 @@ class Main
                     $crossoverOffsprings[] = $mutatedChromosome;
                 }
             }
-
             $this->selectionType = 'elitism';
-            
+
             $lastPopulation = $populations;
             $populations = null;
-            $populations = $selection->initializeSelectionFactory($this->selectionType, $lastPopulation, $crossoverOffsprings, $this->maxBudget);
+           
+            $populations = $selection->initializeSelectionFactory($this->selectionType, $lastPopulation, $crossoverOffsprings, $this->maxBudget, $catalogue->getAllProducts(), $this->popSize);
             
+            return ($populations);
+
             $crossoverOffsprings = [];
 
             $bestChromosomes = $populations[0]['chromosomes'];

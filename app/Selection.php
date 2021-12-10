@@ -8,6 +8,8 @@ interface Selection
 class Elitism implements Selection
 {
     public $crossoverOffsprings;
+    public $catalogue;
+    public $popSize;
 
     function createTemporaryPopulation($population)
     {
@@ -17,35 +19,42 @@ class Elitism implements Selection
         return $population;
     }
 
-    function generateNewPopulation($population, $maxBudget):array
+    function generateNewPopulation($population, $maxBudget)
     {
         $tempPopulation = $this->createTemporaryPopulation($population);
-        $fitness = new Fitness($population, $maxBudget);
+
+        $fitness = new Fitness($population, $maxBudget, $this->catalogue);
         $newPopulation = [];
 
         foreach ($tempPopulation as $chromosomes){
-            $amount = $fitness->getAmount($chromosomes);
-            if ($amount <= $maxBudget){
-                $newPopulation[] = [
-                    'amount' => $amount,
-                    'chromosomes' => $chromosomes
-                ];
-            }
+            $newPopulation[] = [
+                'amount' => $fitness->getAmount($chromosomes),
+                'chromosomes' => $chromosomes
+            ];
+            
         }
+        //urutkan secara desc dulu
         rsort($newPopulation);
-        $newPopulation = array_slice($newPopulation, 0, count($population));
+        //baca satu per satu
+        foreach ($newPopulation as $key => $population){
+            // echo $key.' '. $population['amount'];
+            // echo "\n";
+        }
 
         return $newPopulation;
+        return array_slice($newPopulation, 0, $this->popSize);
     }
 }
 
 class SelectionFactory
 {
-    function initializeSelectionFactory($selectionType, $population, $crossoverOffsprings, $maxBudget)
+    function initializeSelectionFactory($selectionType, $population, $crossoverOffsprings, $maxBudget, $catalogue, $popSize)
     {
         if ($selectionType === 'elitism'){
             $elitism = new Elitism;
             $elitism->crossoverOffsprings = $crossoverOffsprings;
+            $elitism->catalogue = $catalogue;
+            $elitism->popSize = $popSize;
             return $elitism->generateNewPopulation($population, $maxBudget);
         }
     }
