@@ -21,11 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $main = new Main;
+    $main->maxBudget = $maxBudget;
     $main->popSize = 85;
     $main->crossoverRate = 0.8;
     $main->maxGen = 250;
     $main->selectionType = 'elitism';
-    $main->maxBudget = $maxBudget;
     $main->stoppingValue = 100;
     $main->numOfLastResult = 10;
 
@@ -34,42 +34,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($result)) {
         echo 'Optimum solution was not found. Try again, or raise your Budget.';
     } else {
-        echo 'Optimum amount <b>Rp. ' . $result['amount'] . "</b>";
-        echo "<br>";
-        echo "Number of items: <b>" . $result['numOfItems'] . "</b>";
-        echo "<br>Items: <br>";
+        echo "<table>";
+        echo "<tr><td>Your budget</td><td>: <b>Rp. ".number_format($main->maxBudget)."</b></td></tr>";
+        echo "<tr><td>Optimum amount</td><td>: <b>Rp. " . number_format($result['amount'])  . "</b></td></tr>";
+        echo "<tr><td>Number of items</td><td>: <b> " . $result['numOfItems'] . "</b></td></tr>";
+        echo "</table>";
 
+        echo "<br>List of items: <br>";
+        echo "<table><tr><td>No.</td><td>Item</td><td>Price (Rp)</td></tr>";
         foreach ($result['items'] as $key => $item) {
-            echo ($key + 1) . ' ' . $item[0] . ' Rp. ' . $item[1];
-            echo "<br>";
+            echo "<tr><td>". ($key + 1)."</td><td>". $item[0]."</td><td  style=align:right'>".number_format($item[1])."</td></tr>";
         }
+        echo "</table>";
     }
 }
 
 ?>
 
-
-<?php
-    // $main = new Main;
-    // $main->popSize = 85;
-    // $main->crossoverRate = 0.8;
-    // $main->maxGen = 250;
-    // $main->selectionType = 'elitism';
-    // $main->maxBudget = $maxBudget;
-    // $main->stoppingValue = 100;
-    // $main->numOfLastResult = 10;
-
-    // $result = $main->runMain();
-    // if (empty($result)) {
-    //     echo 'Solution is not found. Try again, or raise your Budget.';
-    // } else {
-    //     echo 'Optimum amount <b>Rp. ' . $result['amount'] . "</b>";
-    //     echo "<br>";
-    //     echo "Number of items: <b>" . $result['numOfItems'] . "</b>";
-    //     echo "<br>Items: <br>";
-
-    //     foreach ($result['items'] as $key => $item) {
-    //         echo ($key + 1) . ' ' . $item[0] . ' Rp. ' . $item[1];
-    //         echo "<br>";
-    //     }
-    // }

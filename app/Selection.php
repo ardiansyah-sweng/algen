@@ -5,6 +5,14 @@ interface Selection
     function generateNewPopulation($population, $maxBudget);
 }
 
+class RouletteWheel implements Selection
+{
+    function generateNewPopulation($population, $maxBudget)
+    {
+        //
+    }
+}
+
 class Elitism implements Selection
 {
     public $crossoverOffsprings;
@@ -47,7 +55,6 @@ class Elitism implements Selection
                 'amount' => $fitness->getAmount($chromosomes),
                 'chromosomes' => $chromosomes
             ];
-            
         }
         //urutkan secara desc dulu
         rsort($newPopulation);
@@ -72,6 +79,10 @@ class SelectionFactory
             $elitism->catalogue = $catalogue;
             $elitism->popSize = $popSize;
             return $elitism->generateNewPopulation($population, $maxBudget);
+        }
+
+        if ($selectionType === 'roulettee'){
+            //
         }
     }
 }
