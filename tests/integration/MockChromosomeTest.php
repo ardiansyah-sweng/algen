@@ -53,8 +53,8 @@ class MockChromosomeTest extends TestCase
         $this->assertNotEmpty($products);
 
         $kromosom = new Chromosome($products);
-        $result = $kromosom->createChromosome();
-        print_r($result);die;
+        $result = $kromosom->createChromosome($mockProduct);
+  
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
         $this->assertContainsEquals(0, $result);

@@ -9,11 +9,9 @@ class Chromosome
         $this->catalogue = $catalogue;
     }
 
-    function createChromosome():array
+    function createChromosome($numOfGen):array
     {
         $chromosomes = [];  
-        $numOfGen = count($this->catalogue);
-
         if ($numOfGen > 0) {
             $counter = 0;
             while ($counter < 1) {

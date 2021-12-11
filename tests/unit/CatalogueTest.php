@@ -15,10 +15,20 @@ class CatalogueTest extends TestCase
     function testGetAllProducts()
     {
         $allProducts = new Catalogue;
+        print_r($allProducts->getAllProducts());die;
         if ($allProducts->getAllProducts()){
             $this->assertNotEmpty($allProducts->getAllProducts());
         } else {
             $this->assertEmpty($allProducts->getAllProducts());
         }
+    }
+
+    function test_createFakeCatalogue()
+    {
+        $allProducts = new Catalogue;
+        $result = $allProducts->createFakeCatalogue();
+        //print_r($result);
+
+        $this->assertTrue($result);
     }
 }

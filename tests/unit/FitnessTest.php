@@ -29,9 +29,9 @@ class FitnessTest extends TestCase
 
     function test_calculateFitnessValue()
     {
-        $population = new Population;
+        $population = new InitialPopulation;
         $population->popSize = 10;
-        $populations = $population->generatePopulation();
+        $populations = $population->generatePopulation(new Chromosome);
         $fitness = new Fitness($populations, $this->maxBudget);
 
         $fitnessValues = $fitness->calculateFitnessValue();
@@ -40,8 +40,8 @@ class FitnessTest extends TestCase
         } else {
             $this->assertNotEmpty($fitnessValues);
             $this->assertNotNull($fitnessValues[rand(0,count($fitnessValues)-1)]['numOfSelectedGen']);
-            $this->assertNotNull($fitnessValues[rand(0, count($fitnessValues))]['amount']);
-            $this->assertGreaterThan(10000, $fitnessValues[rand(0, count($fitnessValues)-1)]['amount']);
+            $this->assertNotNull($fitnessValues[rand(0, count($fitnessValues))]['fitnessValue']);
+            $this->assertGreaterThan(10000, $fitnessValues[rand(0, count($fitnessValues)-1)]['fitnessValue']);
         }
     }
 

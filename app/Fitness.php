@@ -7,40 +7,26 @@ class Fitness
 
     public $populations;
     public $maxBudget;
+    public $catalogue;
 
-    function __construct(array $populations, float $maxBudget)
+    function __construct(array $populations, float $maxBudget, array $catalogue)
     {
         $this->populations = $populations;
         $this->maxBudget = $maxBudget;
+        $this->catalogue = $catalogue;
     }
 
-    function assigningGenWithPrice(array $chromosomes): array
+    function getAmount(array $chromosomes): float
     {
-        $binary1Genes = [];
-        $catalogue = new Catalogue;
-        $products = $catalogue->getAllProducts();
-
+        $amount = 0;
         if (count(array_unique($chromosomes)) > 1) {
             foreach ($chromosomes as $key => $gen) {
                 if ($gen === 1) {
-                    $binary1Genes[] = [
-                        'selectedGen' => $key,
-                        'price' => $products[$key]['item_price']
-                    ];
+                    $amount += $this->catalogue[$key]['item_price'];
                 }
             }
         }
-
-        if (count(array_unique($chromosomes)) === 1) {
-            foreach ($chromosomes as $key => $gen) {
-                $binary1Genes[] = [
-                    'selectedGen' => 0,
-                    'price' => 0
-                ];
-            }
-        }
-
-        return $binary1Genes;
+        return $amount;
     }
 
     function calculateFitnessValue(): array

@@ -1,22 +1,14 @@
 <?php
 
-class Population
+class InitialPopulation
 {
-    public $popSize;
-    public $catalogue;
-
-    function __construct(int $popSize, array $catalogue)
-    {
-        $this->popSize = $popSize;
-        $this->catalogue = $catalogue;
-    }
-
-    function generatePopulation(): array
+    function generatePopulation(int $popSize, array $catalogue, int $numOfGen): array
     {
         $population = [];
-        if ($this->popSize > 0) {
-            for ($i = 0; $i < $this->popSize; $i++) {
-                $population[] = (new Chromosome($this->catalogue))->createChromosome();
+        $chromosome = new Chromosome($catalogue);
+        if ($popSize > 0) {
+            for ($i = 0; $i < $popSize; $i++) {
+                $population[] = $chromosome->createChromosome($numOfGen);
             }
         }
         return $population;
