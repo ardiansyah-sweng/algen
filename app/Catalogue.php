@@ -31,9 +31,9 @@ class Catalogue
         if (count($this->getAllProducts()) > 0){
             $this->emptyCatalogueTable();
         }
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 40; $i++) {
             $item = $faker->productName();
-            $price =  $faker->numberBetween(8500, 135000);
+            $price =  $faker->numberBetween(8500, 95000);
             $image = $faker->imageUrl(100, 100, 'business');
 
             //insert into table
