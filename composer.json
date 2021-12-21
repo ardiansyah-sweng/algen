@@ -23,6 +23,7 @@
     },
     "require": {
         "fakerphp/faker": "^1.17",
-        "mbezhanov/faker-provider-collection": "^2.0"
+        "mbezhanov/faker-provider-collection": "^2.0",
+        "guzzlehttp/guzzle": "^7.4"
     }
 }
