@@ -17,7 +17,7 @@ class Main
         $population = new InitialPopulation;
         $numOfGen = count($catalogue->getAllProducts());
 
-        $cutPointIndex = rand(0, $numOfGen- 1);
+        $cutPointIndex = rand(0, $numOfGen - 1);
         $populations = $population->generatePopulation($this->popSize, $catalogue->getAllProducts(), $numOfGen);
         
         $crossoverOffsprings = [];

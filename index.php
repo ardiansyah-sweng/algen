@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $main = new Main;
     $main->maxBudget = $maxBudget;
-    $main->popSize = 85;
+    $main->popSize = 10;
     $main->crossoverRate = 0.8;
     $main->maxGen = 250;
     $main->selectionType = 'elitism';
